@@ -11,9 +11,8 @@ import java.util.List;
 @Entity
 @Table(
         name = "lemma",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"lemma", "site_id"})}
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"lemma", "site_id"})}     //lemma  word
 )
-
 @Data
 @NoArgsConstructor
 @Slf4j
@@ -40,7 +39,7 @@ public class Lemma implements Comparable<Lemma> {
     @Transient
     private int totalFrequency;
 
-    public Lemma(String lemma, int totalFrequency) { //вспомогательный конструктор для организации поиска
+    public Lemma(String word, int totalFrequency) { //вспомогательный конструктор для организации поиска
         this.lemma = lemma;
         this.totalFrequency = totalFrequency;
     }

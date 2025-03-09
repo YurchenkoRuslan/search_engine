@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import searchengine.config.Site;
 import searchengine.config.AppParameters;
+import searchengine.dto.indexing.IndexingResult;
 import searchengine.dto.indexing.RelevancePage;
 import searchengine.model.SiteStatus;
 import searchengine.model.entity.Index;
@@ -41,11 +42,11 @@ public class ApiService {
     private final AppParameters parameters;
 
     private static final String INDEXING_RUNNING_MESSAGE = "Индексация уже запущена!";
+    private static final String INDEXING_NOT_RUN_MESSAGE = "Индексация еще не запущена!";
     private static final String INDEXING_STOPPED_MESSAGE = "Индексация остановлена пользователем!";
     private static final String INDEXING_STOPPED_MESSAGE_PARAM = "Индексация сайта {} остановлена пользователем.";
     private static final String INDEXING_SUCCESSFUL_MESSAGE = "Индексация сайтов успешно завершена!";
     private static final String FAIL_SITE_RIDDING_MESSAGE = "Ошибка чтения сайта!";
-    private static final String INDEXING_NOT_RUN_MESSAGE = "Индексация еще не запущена!";
 
     private boolean indexingIsStopped = false;
     private boolean indexingIsRunning = false;
@@ -65,10 +66,10 @@ public class ApiService {
     }
 
     //todo метод индексации сайтов
-    public boolean startIndexing() {
+    public IndexingResult startIndexing() {    //boolean
         if (indexingIsRunning) {
             log.warn(INDEXING_RUNNING_MESSAGE);
-            return false;
+            return new IndexingResult(false, INDEXING_RUNNING_MESSAGE);     //false;
         }
 
         indexingIsRunning = true;
@@ -99,27 +100,27 @@ public class ApiService {
         while (processedSitesCount.get() < amountSites) {
             if (indexingIsStopped) {
                 log.warn(INDEXING_STOPPED_MESSAGE);
-                return false;
+                return new IndexingResult(false, INDEXING_RUNNING_MESSAGE);     //false;
             }
         }
 
         log.info(INDEXING_SUCCESSFUL_MESSAGE);
         indexingIsRunning = false;
-        return true;
+        return new IndexingResult(true); //true;
     }
 
     //todo метод останавливает индексацию
-    public boolean stopIndexing() {
+    public IndexingResult stopIndexing() {      //boolean;
         if (!indexingIsRunning) {
             log.warn(INDEXING_NOT_RUN_MESSAGE);
-            return false;
+            return new IndexingResult(false, INDEXING_NOT_RUN_MESSAGE); //false;
         }
 
         indexingIsRunning = false;
         indexingIsStopped = true;
 
         setFailedStatus();
-        return true;
+        return new IndexingResult(true);    //true;
     }
 
     private void setFailedStatus() {
@@ -194,7 +195,7 @@ public class ApiService {
         Lemma lemma = lemmaService.findLemmaBySiteIdAndWord(site.getId(), word);
         if (lemma == null) {
             lemma = new Lemma();
-            lemma.setLemma(word);
+            lemma.setLemma(word);    //lemma     word
             lemma.setSite(site);
             lemma.setFrequency(1);
         } else {
@@ -252,12 +253,12 @@ public class ApiService {
         //todo 3
         Collections.sort(lemmaListByQuery); //сортируем список лемм по возрастанию частоты
         log.info("Итоговый список лемм для поиска:");
-        lemmaListByQuery.forEach(l -> log.info(l.getLemma()));
+        lemmaListByQuery.forEach(l -> log.info(l.getLemma()));  //getLemma  getWord
 
         //todo 4
         List<List<Page>> pageLists = new ArrayList<>();
         for (Lemma currentLemma : lemmaListByQuery) {
-            String word = currentLemma.getLemma();
+            String word = currentLemma.getLemma();      //getLemma  getWord
 
             //список лемм из БД по указанному слову
             //все леммы, либо с указанного сайта (т.е. 1 лемма), либо со всех сайтов
@@ -301,7 +302,7 @@ public class ApiService {
 
         //todo 7 преобразуем объекты Page в RelevancePage
         List<String> lemmasOfQuery = lemmaListByQuery.stream()
-                .map(Lemma::getLemma)
+                .map(Lemma::getLemma)       //getLemma   getWord
                 .toList();
         List<RelevancePage> relevancePages = pageListFromDB.stream()
                 .map(p -> new RelevancePage(p, lemmasOfQuery))

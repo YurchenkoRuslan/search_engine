@@ -14,8 +14,8 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Getter
-@Setter
+//@Getter
+//@Setter
 public class SiteServiceImpl implements SiteService {
 
     private final SiteRepository siteRepository;

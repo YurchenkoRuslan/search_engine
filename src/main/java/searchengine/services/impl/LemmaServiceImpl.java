@@ -61,7 +61,7 @@ public class LemmaServiceImpl implements LemmaService {
     @Override
     public List<Lemma> findByWord(String word) {
         try {
-            return lemmaRepository.findByWord(word);
+            return lemmaRepository.findByLemma(word);    //findByLemma(word)
         } catch (Exception e) {
             log.warn(e.getMessage());
             return null;

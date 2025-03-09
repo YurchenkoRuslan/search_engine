@@ -31,7 +31,7 @@ public class WebSite { //implements Runnable
     @Column(name = "name", columnDefinition = "VARCHAR(255)", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "status", columnDefinition = "ENUM('INDEXING', 'INDEXED', 'FAILED')")
+    @Column(name = "status")     //, columnDefinition = "ENUM('INDEXING', 'INDEXED', 'FAILED')")
     @Enumerated(EnumType.STRING)
     private SiteStatus status;
 
@@ -99,7 +99,4 @@ public class WebSite { //implements Runnable
                 '}';
     }
 
-//    public String getProtocol() {
-//        return url.substring(0, url.indexOf("/"));
-//    }
 }

@@ -1,0 +1,96 @@
+spring:
+  main:
+    allow-circular-references: true
+
+  datasource:
+#    username: root
+#    password: Ruslan12345
+#    url: jdbc:mysql://localhost:3306/search_engine?useSSL=false&requireSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:postgresql://localhost:5432/search_engine_db
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      schema: search_engine_schema
+      connection-init-sql: create schema if not exists search_engine_schema
+      connection-timeout: 10000
+
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false # true  false
+    hibernate:
+      ddl-auto: create #create validate none
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL8Dialect
+#    hibernate:
+#      ddl-auto: create #update  create
+##    show-sql: true
+
+#  liquibase:
+#    change-log: classpath:db/changelog/db.changelog-master.xml
+#    enabled: true
+
+server:
+  port: 8080
+
+app:  #indexing-settings:
+  userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 YaBrowser/24.10.0.0 Safari/537.36
+  referer: http://www.google.com
+  timeDelay: 500
+  sites:
+#    - url: https://www.lenta.ru
+#      name: Лента.ру
+#    - url: https://www.skillbox.ru
+#      name: Skillbox
+#    - url: https://www.playback.ru
+#      name: PlayBack.Ru
+
+#    - url: http://www.playback.ru/
+#      name: playback.ru
+#    - url: https://volochek.life/
+#      name: volochek.life
+#    - url: http://radiomv.ru/
+#      name: radiomv.ru
+#    - url: https://ipfran.ru/
+#      name: ipfran.ru
+#    - url: https://dimonvideo.ru/
+#      name: dimonvideo.ru
+#    - url: https://nikoartgallery.com/
+#      name: nikoartgallery.com
+#    - url: https://et-cetera.ru/mobile/
+#      name: et-cetera.ru
+#    - url: https://www.lutherancathedral.ru/
+#      name: lutherancathedral.ru
+#    - url: https://dombulgakova.ru/
+#      name: dombulgakova.ru
+#    - url: https://www.svetlovka.ru/
+#      name: www.svetlovka.ru
+
+    - url: https://metanit.com/kotlin/tutorial
+      name: Metanit.com/kotlin
+#    - url: https://metanit.com/kotlin/jetpack/
+#      name: Metanit.com/kotlin/jetpack
+#    - url: https://metanit.com/kotlin/tutorial/
+#      name: Metanit.com/kotlin/tutorial
+
+#    - url: https://metanit.com/java/
+#      name: Metanit.com/java
+#    - url: https://metanit.com/python/
+#      name: Metanit.com/python
+#    - url: https://metanit.com/python/Q
+#      name: Metanit.com/pythonQ
+#    - url: https://metanit.com/kotlin/S
+#      name: Metanit.com/kotlinS
+
+#    - url: https://metanit.com/python/database/3.1.php
+#      name: qwewqwe
+
+#    - url: https://www.sendel.ru
+#      name: sendel.ru
+
+#    - url: https://svetlovka.ru/  #projects/kids/
+#      name: svetlovka.ru
+
+

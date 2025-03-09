@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Getter
+//@Getter
 @Slf4j
 @RequiredArgsConstructor
 public class PageServiceImpl implements PageService {
